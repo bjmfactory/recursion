@@ -6,7 +6,6 @@
 // But instead we're going to implement it from scratch:
 var getElementsByClassName = function(className){
   var results = [];
-  var allElements = document.body;
   var hasClass = function(element){
     if (element.classList){
       return element.classList.contains(className);
@@ -19,7 +18,7 @@ var getElementsByClassName = function(className){
   function checkChildrenForClass(element){
     for(var i = 0; i < element.childNodes.length; i++){
       if (element.childNodes[i].hasChildNodes()){
-        checkChildrenForClass(element.childNodes[i])
+        checkChildrenForClass(element.childNodes[i]);
       }
 
       if (hasClass(element.childNodes[i])){
@@ -28,8 +27,7 @@ var getElementsByClassName = function(className){
     }
   }
 
-  checkChildrenForClass(allElements)
-  console.log(results)
+  checkChildrenForClass(document);
   return results;
 };
 
