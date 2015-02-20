@@ -19,5 +19,7 @@ var makeString = function(object) {
   if (typeof object === string){
     object = '"' + object + '"';
   }
-  if (typeof)
+  else {
+    object = object
+  }
 }
