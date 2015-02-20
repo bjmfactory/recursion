@@ -6,9 +6,7 @@
 // But instead we're going to implement it from scratch:
 var getElementsByClassName = function(className){
   var results = [];
-  var body = document.body;
-  var element = body;
-  var children = element.childNodes;
+  var allElements = document.body;
   var hasClass = function(element){
     if (element.classList){
       return element.classList.contains(className);
@@ -18,17 +16,20 @@ var getElementsByClassName = function(className){
     }
   };
 
-  for(var i = 0; i < children.length; i++){
-    if (hasClass(children[i])){
-      results.push(children[i]);
-    }
-    if (children[i].hasChildNodes()){
-      element = children[i];
-      // getElementsByClassName(className); This is where I would expect to call function
-      // within itself, but it give me a stack overflow.
+  function checkChildrenForClass(element){
+    for(var i = 0; i < element.childNodes.length; i++){
+      if (element.childNodes[i].hasChildNodes()){
+        checkChildrenForClass(element.childNodes[i])
+      }
+
+      if (hasClass(element.childNodes[i])){
+        results.push(element.childNodes[i]);
+      }
     }
   }
 
+  checkChildrenForClass(allElements)
+  console.log(results)
   return results;
 };
 
