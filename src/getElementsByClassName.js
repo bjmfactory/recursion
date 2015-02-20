@@ -7,22 +7,20 @@
 var getElementsByClassName = function(className){
   var results = [];
   var hasClass = function(element){
-    if (element.classList){
+    if (element.classList)
       return element.classList.contains(className);
-    }
-    else {
+    else
       return false;
-    }
   };
 
   function checkChildrenForClass(element){
     for(var i = 0; i < element.childNodes.length; i++){
-      if (element.childNodes[i].hasChildNodes()){
-        checkChildrenForClass(element.childNodes[i]);
-      }
-
       if (hasClass(element.childNodes[i])){
         results.push(element.childNodes[i]);
+      }
+
+      if (element.childNodes[i].hasChildNodes()){
+        checkChildrenForClass(element.childNodes[i]);
       }
     }
   }
@@ -30,17 +28,3 @@ var getElementsByClassName = function(className){
   checkChildrenForClass(document);
   return results;
 };
-
-/* algorithm
-
-base case is no more children.
-
-loop through children of document.body
-  if a child has the class, add it to the results array
-  check to see if that child element has children
-
-loop through all those children
-  if a child has the class, add it to the results array
-  check to see if that child element has children
-
-*/
