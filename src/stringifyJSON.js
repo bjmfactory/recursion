@@ -23,14 +23,35 @@ var stringifyJSON = function(obj) {
   }
 
   if (Array.isArray(obj)){
-    results = '['
+    results = '[';
     for (var i = 0; i < obj.length; i++){
       results = results + stringifyJSON(obj[i]) + ',';
     }
     if (results.length > 1){
-      results = results.substring(0, results.length - 1)
+      results = results.substring(0, results.length - 1);
     }
     results += ']';
+  }
+
+  if (typeof obj === "object" && obj !== null && !Array.isArray(obj)){
+    results = '{';
+    for (var i in obj){
+      if (i !== 'functions' && i !== 'undefined'){
+        results = results + '"' + i + '"' + ":" + stringifyJSON(obj[i]) + ',';
+      }
+    }
+    if (results != '{'){
+      results = results.substring(0, results.length - 1);
+    }
+    results += '}';
+  }
+
+  if (typeof obj === "undefined"){
+    results = '';
+  }
+
+  if (typeof obj === "function"){
+    results = '';
   }
 
   return results;
